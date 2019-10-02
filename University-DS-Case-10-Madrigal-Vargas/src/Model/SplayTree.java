@@ -1,5 +1,8 @@
 package Model;
 
-public class SplayTree {
+import Model.SplayTreeNode;
 
+
+public class SplayTree {
+	
 }

@@ -1,0 +1,21 @@
+{
+	"planta" :
+	{
+		"capacidad" : 10000
+	},
+	"sensores" :
+	[
+		{
+			"Cantón" : "San José",
+			"Distrito" : "Escazú",
+			"Barrio" : "Guachipelín",
+			"Consumo" : 83
+		},
+		{
+			"Cantón" : "Cartago",
+			"Distrito" : "Los Ángeles",
+			"Barrio" : "",
+			"Consumo" : 65
+		}
+	]
+}

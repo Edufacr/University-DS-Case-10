@@ -1,6 +1,8 @@
 package Model;
 
-public class SplayTreeNode<T> {
+import java.util.*;
+
+public class SplayTreeNode<T> implements Comparable<SplayTreeNode<T>>{
 	private SplayTreeNode<T> father;
 	private SplayTreeNode<T> rightChild;
 	private SplayTreeNode<T> leftChild;
@@ -51,6 +53,10 @@ public class SplayTreeNode<T> {
 
 	public void setContents(T pContents) {
 		this.contents = pContents;
+	}
+	
+	public int compareTo(SplayTreeNode<T> pOtherNode){
+		return 0;
 	}
 	
 }

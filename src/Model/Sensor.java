@@ -1,7 +1,6 @@
 package Model;
 
 import Model.TType;
-import java.util.Random;
 
 public class Sensor {
 	private String name;
@@ -9,7 +8,7 @@ public class Sensor {
 	private int intake;
 	private String path;
 	private boolean enoughWater;
-	
+
 	public Sensor(String pName, int pType, int pIntake, String pPath) {
 		this.name = pName;
 		this.type = TType.values()[pType];
@@ -49,23 +48,13 @@ public class Sensor {
 	public void setPath(String pPath) {
 		this.path = pPath;
 	}
-	
+
 	public void hasEnoughWater() {
 		this.enoughWater = true;
 	}
-	
+
 	public void setNewIntake(int pRange) {
 		int percentage = pRange / 100;
 		this.intake *= percentage;
 	}
-	
-	
-	public static void main(String[] args) {
-		Random rand = new Random();
-		int randInt = rand.nextInt(13 + 8) - 8;
-		System.out.println(randInt);
-	}
-	
 }
-
-

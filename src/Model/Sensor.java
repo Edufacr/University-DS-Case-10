@@ -5,14 +5,16 @@ import Model.TType;
 public class Sensor {
 	private String name;
 	private TType type;
-	private int consumoHijos;
+	private int intake;
 	private String path;
-	
-	public Sensor(String pName, int pType, int pConsumo, String pPath) {
+	private boolean enoughWater;
+
+	public Sensor(String pName, int pType, int pIntake, String pPath) {
 		this.name = pName;
 		this.type = TType.values()[pType];
-		this.consumoHijos = pConsumo;
+		this.intake = pIntake;
 		this.path = pPath;
+		this.enoughWater = false;
 	}
 
 	public String getName() {
@@ -31,12 +33,12 @@ public class Sensor {
 		this.type = TType.values()[pType];
 	}
 
-	public int getConsumoHijos() {
-		return consumoHijos;
+	public int getIntake() {
+		return intake;
 	}
 
-	public void setConsumoHijos(int pConsumoHijos) {
-		this.consumoHijos = pConsumoHijos;
+	public void setIntake(int pIntake) {
+		this.intake = pIntake;
 	}
 
 	public String getPath() {
@@ -46,6 +48,13 @@ public class Sensor {
 	public void setPath(String pPath) {
 		this.path = pPath;
 	}
-	
-	
+
+	public void hasEnoughWater() {
+		this.enoughWater = true;
+	}
+
+	public void setNewIntake(int pRange) {
+		int percentage = pRange / 100;
+		this.intake *= percentage;
+	}
 }

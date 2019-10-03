@@ -73,6 +73,7 @@ local.properties
 
 # End of https://www.gitignore.io/api/eclipse
 
+<<<<<<< HEAD
 # Created by https://www.gitignore.io/api/intellij
 # Edit at https://www.gitignore.io/?templates=intellij
 
@@ -165,3 +166,6 @@ fabric.properties
 .idea/**/markdown-navigator/
 
 # End of https://www.gitignore.io/api/intellij
+=======
+.DS_Store
+>>>>>>> Gabriel

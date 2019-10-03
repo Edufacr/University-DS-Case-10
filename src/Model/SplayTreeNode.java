@@ -1,30 +1,22 @@
 package Model;
 
-import java.util.*;
 
-public class SplayTreeNode<T> implements Comparable<SplayTreeNode<T>>{
+public class SplayTreeNode<T>{
 	private SplayTreeNode<T> father;
 	private SplayTreeNode<T> rightChild;
 	private SplayTreeNode<T> leftChild;
 	private T contents;
 	
 	
-	// Constructor for the root node when creating the tree
-	public SplayTreeNode(T contents) {
+	public SplayTreeNode(T pContents) {
 		this.father = null;
-		this.rightChild = null;
-		this.leftChild = null;
-	}
-	
-	public SplayTreeNode(SplayTreeNode<T> pFather, T pContents) {
-		this.father = pFather;
 		this.rightChild = null;
 		this.leftChild = null;
 		this.contents = pContents;
 	}
 
 	public SplayTreeNode<T> getFather() {
-		return father;
+		return this.father;
 	}
 
 	public void setFather(SplayTreeNode<T> pFather) {
@@ -32,7 +24,7 @@ public class SplayTreeNode<T> implements Comparable<SplayTreeNode<T>>{
 	}
 
 	public SplayTreeNode<T> getRightChild() {
-		return rightChild;
+		return this.rightChild;
 	}
 
 	public void setRightChild(SplayTreeNode<T> pRightChild) {
@@ -40,7 +32,7 @@ public class SplayTreeNode<T> implements Comparable<SplayTreeNode<T>>{
 	}
 
 	public SplayTreeNode<T> getLeftChild() {
-		return leftChild;
+		return this.leftChild;
 	}
 
 	public void setLeftChild(SplayTreeNode<T> pLeftChild) {
@@ -48,15 +40,11 @@ public class SplayTreeNode<T> implements Comparable<SplayTreeNode<T>>{
 	}
 
 	public T getContents() {
-		return contents;
+		return this.contents;
 	}
 
 	public void setContents(T pContents) {
 		this.contents = pContents;
 	}
-	
-	public int compareTo(SplayTreeNode<T> pOtherNode){
-		return 0;
-	}
-	
 }
+ 

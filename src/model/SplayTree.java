@@ -1,6 +1,6 @@
-package Model;
+package model;
 
-import Model.SplayTreeNode;
+import model.SplayTreeNode;
 
 
 

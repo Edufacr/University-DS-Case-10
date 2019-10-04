@@ -1,24 +1,18 @@
 package naryTree;
 
 public class NaryTree<V> {
-	//cambio
 	private NaryTreeNode<V> root;
-	public NaryTree() {
-		//root = new NaryTreeNode<V>(new Sensor()) //planta
+	public NaryTree(NaryTreeNode<V> pNode) {
+		root = pNode;
 	}
 	public void AddTo(NaryTreeNode<V> pParentNode, NaryTreeNode<V> pNode){
 		pParentNode.AddChild(pNode);
 	}
-	
-	public void ChangeValues() {
-		//Va para la clase manager
+	public NaryTreeNode<V> getRoot() {
+		return root;
 	}
-	public void ChangeValuesAux(NaryTreeNode<V> pNode) {
-		for(int childIndex = 0; childIndex<pNode.getChildNum();childIndex++) {
-			ChangeValuesAux(pNode.getChildrenList().get(childIndex));
-		}
-		//pNode.getValue().set; 
-		pNode.getValue();
+	public void setRoot(NaryTreeNode<V> root) {
+		this.root = root;
 	}
 }
 	

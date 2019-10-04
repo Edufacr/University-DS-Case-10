@@ -18,7 +18,9 @@ public class NaryTreeNode<V> {
 			childrenList.add(pNode);
 		}
 	}
-
+	public void DeleteNode() {
+		//Falta 
+	}
 	public int getChildNum() {
 		return childNum;
 	}

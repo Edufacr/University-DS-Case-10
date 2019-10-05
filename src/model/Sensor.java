@@ -1,7 +1,8 @@
-package Model;
+package model;
 
-import Model.TType;
 import java.lang.Comparable;
+
+import model.TType;
 
 public class Sensor implements Comparable<Sensor>{
 	private String name;

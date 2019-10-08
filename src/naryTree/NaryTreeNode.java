@@ -5,36 +5,50 @@ import java.util.ArrayList;
 public class NaryTreeNode<V> {
 	private V value;
 	private ArrayList<NaryTreeNode<V>> childrenList;
-	private int childNum;
+	private NaryTreeNode<V> father;
 	
 	public NaryTreeNode(V pValue){
 		value = pValue;
 		childrenList = new ArrayList<NaryTreeNode<V>>();
-		childNum = 0;
 	}
 	
-	public void AddChild(NaryTreeNode<V> pNode) {
+	void AddChild(NaryTreeNode<V> pNode) {
 		if(pNode != null) {
 			childrenList.add(pNode);
+			pNode.setFather(this);
 		}
 	}
-	public void DeleteNode() {
-		//Falta 
+	private void DeleteChild(NaryTreeNode<V> pNode){
+		childrenList.remove(pNode);
 	}
-	public int getChildNum() {
-		return childNum;
+	private void GiveChildrenTo(NaryTreeNode<V> pNode) {
+		pNode.childrenList.addAll(childrenList);
 	}
-	public void decChildNum() {
-		childNum--;
-	}
-	public void incChildNum() {
-		childNum++;
-	}
+	void FreeNode(){
+		if(father != null){
+			father.DeleteChild(this);
+			GiveChildrenTo(father);
+			childrenList.clear();
+			setFather(null);
+		}
 
+	}
 	public V getValue() {
 		return value;
 	}
 	public ArrayList<NaryTreeNode<V>> getChildrenList() {
 		return childrenList;
+	}
+
+	public NaryTreeNode<V> getFather() {
+		return father;
+	}
+
+	private void setFather(NaryTreeNode<V> father) {
+		this.father = father;
+	}
+
+	public String toString(){
+		return value.toString();
 	}
 }

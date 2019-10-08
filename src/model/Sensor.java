@@ -82,4 +82,6 @@ public class Sensor implements Comparable<Sensor>{
 		}
 		return 0;
 	}
+	
+	
 }

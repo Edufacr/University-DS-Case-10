@@ -1,7 +1,8 @@
-package Model;
+package model;
 
-import Model.TType;
 import java.lang.Comparable;
+
+import model.TType;
 
 public class Sensor implements Comparable<Sensor>{
 	private String name;
@@ -16,6 +17,10 @@ public class Sensor implements Comparable<Sensor>{
 		this.intake = pIntake;
 		this.path = pPath;
 		this.enoughWater = false;
+	}
+	public Sensor(String pName) {
+		//por mientras para la planta
+		name = pName;
 	}
 
 	public String getName() {
@@ -65,7 +70,7 @@ public class Sensor implements Comparable<Sensor>{
 	public void setNewIntake(int pRange) {
 		this.intake *= pRange;
 	}
-
+	
 	@Override
 	// Lexicographically compares the name of both sensors. If the sensor's name is bigger than the other sensor's name, returns a 1. Returns 0 if equal or -1 if smaller
 	public int compareTo(Sensor pOtherSensor) {

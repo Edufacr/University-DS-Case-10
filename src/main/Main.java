@@ -12,9 +12,7 @@ public class Main {
 		tree.AddTo(tree.getRoot(),new NaryTreeNode<>(8));
 		tree.AddTo(node,new NaryTreeNode<>(7));
 		tree.Print(tree.getRoot());
-		System.out.println("Hola");
-		tree.DeleteNode(node);
-		tree.Print(tree.getRoot());
+		
 	}
 
 }

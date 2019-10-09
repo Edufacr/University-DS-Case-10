@@ -24,6 +24,10 @@ public class SensorManager {
 		}
 	}
 
+	public Sensor GenerateSensor(int pIntake, String pCanton, String pDistrito, String pBarrio ) {
+		return new Sensor(pIntake,pCanton,pDistrito,pBarrio);
+	}
+
 	public void AddSensor(Sensor pSensor, NaryTreeNode<Sensor> pParentNaryNode) {
 		NaryTreeNode<Sensor> node = new NaryTreeNode<Sensor>(pSensor);
 		mainTree.AddTo(pParentNaryNode, node);

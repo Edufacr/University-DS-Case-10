@@ -21,9 +21,11 @@ public class Sensor implements Comparable<Sensor>{
 		name = location[typeNum];
 		type = TType.values()[typeNum];
 	}
-	public Sensor(String pName) {
+	public Sensor(String pName,int pIntake) {
 		//por mientras para la planta
+		//se deberia poner type depende de si se usa en la interfaz
 		name = pName;
+		intake = pIntake;
 	}
 	private int DetermineType(){
 		int locaIndex;

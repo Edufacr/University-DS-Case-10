@@ -1,17 +1,22 @@
 package main;
 
-import naryTree.NaryTree;
+import java.util.ArrayList;
+
+import model.*;
 import naryTree.NaryTreeNode;
 
 public class Main {
 
 	public static void main(String[] args) {
-		NaryTree<Integer> tree = new NaryTree<Integer>(new NaryTreeNode<Integer>(5));
-		NaryTreeNode<Integer> node = new NaryTreeNode<>(6);
-		tree.AddTo(tree.getRoot(),node);
-		tree.AddTo(tree.getRoot(),new NaryTreeNode<>(8));
-		tree.AddTo(node,new NaryTreeNode<>(7));
-		tree.Print(tree.getRoot());
+		SensorManager manager = new SensorManager();
+		ArrayList<Sensor> JSONlist = new ArrayList<Sensor>();
+		Sensor sense = manager.GenerateSensor(20, "Escazu", "", "");
+		JSONlist.add(sense);
+		JSONlist.add(manager.GenerateSensor(20, "San Jose", "", ""));
+		JSONlist.add(manager.GenerateSensor(20, "Santa Ana", "", ""));
+		manager.LoadSensors(JSONlist);
+		manager.CheckWaterFlow();
+		String s;
 		
 	}
 

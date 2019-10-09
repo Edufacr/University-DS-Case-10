@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import naryTree.*;
 
-public class SensorManager {
+public class SensorManager implements IConstants {
 	private NaryTree<Sensor> mainTree;
 	private SplayTree<NaryTreeNode<Sensor>> splayTree;
 
@@ -14,7 +14,8 @@ public class SensorManager {
 	}
 
 	private void CreateSensorTree() {
-		mainTree = new NaryTree<Sensor>(new NaryTreeNode<Sensor>(new Sensor("Planta")));
+		//Lo crea con la planta de root
+		mainTree = new NaryTree<Sensor>(new NaryTreeNode<Sensor>(new Sensor("Planta",WATERPLANT_CAPACITY)));
 	}
 
 	// Solo carga en la raiz del arbol
@@ -31,7 +32,7 @@ public class SensorManager {
 	public void AddSensor(Sensor pSensor, NaryTreeNode<Sensor> pParentNaryNode) {
 		NaryTreeNode<Sensor> node = new NaryTreeNode<Sensor>(pSensor);
 		mainTree.AddTo(pParentNaryNode, node);
-		splayTree.add(node);
+		//splayTree.add(node);
 	}
 
 	public void DeleteSensor(NaryTreeNode<Sensor> pNode) {
@@ -58,9 +59,9 @@ public class SensorManager {
 
 	public void CheckWaterFlow() {
 		int waterLeft[] = new int[1];
-		waterLeft[1] = mainTree.getRoot().getValue().getIntake();
+		waterLeft[0] = mainTree.getRoot().getValue().getIntake();
 		for (NaryTreeNode<Sensor> child : mainTree.getRoot().getChildrenList()) {
-			if (waterLeft[1] < 0) {
+			if (waterLeft[0] < 0) {
 				break;
 			}
 			CheckWaterFlowAux(child, waterLeft);
@@ -68,11 +69,11 @@ public class SensorManager {
 	}
 
 	public void CheckWaterFlowAux(NaryTreeNode<Sensor> pNode, int[] pWaterLeft) {
-		pWaterLeft[1] -= pNode.getValue().getIntake();
-		if (pWaterLeft[1] >= 0) {
+		pWaterLeft[0] -= pNode.getValue().getIntake();
+		if (pWaterLeft[0] >= 0) {
 			pNode.getValue().hasEnoughWater();
-			for (NaryTreeNode<Sensor> child : mainTree.getRoot().getChildrenList()) {
-				if (pWaterLeft[1] < 0) {
+			for (NaryTreeNode<Sensor> child : pNode.getChildrenList()) {
+				if (pWaterLeft[0] < 0) {
 					break;
 				}
 				CheckWaterFlowAux(child, pWaterLeft);

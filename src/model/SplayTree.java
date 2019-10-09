@@ -107,8 +107,9 @@ public class SplayTree<T>{
 			if (father.getLeftChild().equals(pSearched)) {
 				
 				SplayTreeNode<T> otherChild = father.getRightChild();
-				otherChild.setFather(grandFather); 
+				if (otherChild != null) { otherChild.setFather(grandFather); }
 				grandFather.setLeftChild(otherChild); 
+				
 					
 				father.setRightChild(grandFather); 
 				pSearched.setFather(greatGrandFather);
@@ -131,35 +132,34 @@ public class SplayTree<T>{
 				
 				father.setFather(pSearched);
 				pSearched.setRightChild(father);
-			}
+			} else if (father.getRightChild().equals(pSearched)) {
 			
-		} else if (father.getRightChild().equals(pSearched)) {
-			
-			SplayTreeNode<T> otherChild = father.getLeftChild();
-			otherChild.setFather(grandFather);
-			grandFather.setRightChild(otherChild);
-			
-			father.setLeftChild(grandFather);
-			pSearched.setFather(greatGrandFather);
-			
-			if (greatGrandFather != null) {
-				grandFather.setFather(father);
+				SplayTreeNode<T> otherChild = father.getLeftChild();
+				if (otherChild != null) { otherChild.setFather(grandFather); }
+					grandFather.setRightChild(otherChild);
 				
-				if (greatGrandFather.getLeftChild().equals(grandFather)) {
-					greatGrandFather.setLeftChild(pSearched);
-				} else {
-					greatGrandFather.setRightChild(pSearched);
+				father.setLeftChild(grandFather);
+				pSearched.setFather(greatGrandFather);
+				
+				if (greatGrandFather != null) {
+					grandFather.setFather(father);
+					
+					if (greatGrandFather.getLeftChild().equals(grandFather)) {
+						greatGrandFather.setLeftChild(pSearched);
+					} else {
+						greatGrandFather.setRightChild(pSearched);
+					}
+					
+				} else {this.root = pSearched;}
+				
+				father.setRightChild(pSearched.getLeftChild());
+				if (pSearched.getLeftChild() != null) {
+					pSearched.getLeftChild().setFather(father);
 				}
 				
-			} else {this.root = pSearched;}
-			
-			father.setRightChild(pSearched.getLeftChild());
-			if (pSearched.getLeftChild() != null) {
-				pSearched.getLeftChild().setFather(father);
+				father.setFather(pSearched);
+				pSearched.setLeftChild(father);
 			}
-			
-			father.setFather(pSearched);
-			pSearched.setLeftChild(father);
 		}
 	}
 
@@ -192,30 +192,29 @@ public class SplayTree<T>{
 						greatGrandFather.setRightChild(pSearched);
 					}
 				} else {this.root = pSearched;}
+			} else if(father.getLeftChild().equals(pSearched)) {
+			
+				if (pSearched.getRightChild() != null) { pSearched.getRightChild().setFather(father); }
+				father.setLeftChild(pSearched.getRightChild());
+				
+				pSearched.setRightChild(father);
+				father.setFather(pSearched);
+				
+				grandFather.setRightChild(pSearched.getLeftChild());
+				if (pSearched.getLeftChild() != null) { pSearched.getLeftChild().setFather(grandFather); }
+				
+				pSearched.setLeftChild(grandFather);
+				grandFather.setFather(pSearched);
+				
+				pSearched.setFather(greatGrandFather);
+				if (greatGrandFather != null) {
+					if (greatGrandFather.getLeftChild().equals(grandFather)) {
+						greatGrandFather.setLeftChild(pSearched);
+					} else {
+						greatGrandFather.setRightChild(pSearched);
+					}
+				} else {this.root = pSearched;}
 			}
-			
-		} else if(father.getLeftChild().equals(pSearched)) {
-			
-			if (pSearched.getRightChild() != null) { pSearched.getRightChild().setFather(father); }
-			father.setLeftChild(pSearched.getRightChild());
-			
-			pSearched.setRightChild(father);
-			father.setFather(pSearched);
-			
-			grandFather.setRightChild(pSearched.getLeftChild());
-			if (pSearched.getLeftChild() != null) { pSearched.getLeftChild().setFather(grandFather); }
-			
-			pSearched.setLeftChild(grandFather);
-			grandFather.setFather(pSearched);
-			
-			pSearched.setFather(greatGrandFather);
-			if (greatGrandFather != null) {
-				if (greatGrandFather.getLeftChild().equals(grandFather)) {
-					greatGrandFather.setLeftChild(pSearched);
-				} else {
-					greatGrandFather.setRightChild(pSearched);
-				}
-			} else {this.root = pSearched;}
 		}
 	}
 	
@@ -228,12 +227,15 @@ public class SplayTree<T>{
 		
 		Comparable<T> cValue = (Comparable<T>) pValue;
 		
+		
 		if (cValue.compareTo(this.root.getContents()) == 0) {
 			return this.root;
 		} else if(cValue.compareTo(this.root.getContents()) < 0) { // pValue < pNode.getValue()
-			return continueSearch(pValue, this.root.getLeftChild());
+			this.root = continueSearch(pValue, this.root.getLeftChild());
+			return this.root;
 		} else if(cValue.compareTo(this.root.getContents()) > 0){ // pValue > pNode.getValue()
-			return continueSearch(pValue, this.root.getRightChild());
+			this.root = continueSearch(pValue, this.root.getRightChild());
+			return this.root;
 		} return null;
 	}
 	
@@ -241,6 +243,10 @@ public class SplayTree<T>{
 	private SplayTreeNode<T> continueSearch(T pValue, SplayTreeNode<T> pNode) {
 		
 		Comparable<T> cValue = (Comparable<T>) pValue;
+		
+		if (pNode == null) {
+			return null;
+		}
 		
 		if (cValue.compareTo(pNode.getContents()) == 0) {
 			this.splayMove(pNode);
@@ -306,6 +312,16 @@ public class SplayTree<T>{
 		printPreorder(pNode.getRightChild());
 	}
 	
+	public boolean delete(T pValue) {
+		if (search(pValue) != null) {
+			
+			
+			
+			return true;
+		} 
+		return false;
+	}
+	
 	
 	public static void main(String[] args) {
 		SplayTree<String> splay = new SplayTree<String>();
@@ -327,9 +343,18 @@ public class SplayTree<T>{
 		splay.print();
 		
 		System.out.println();
-		System.out.println(splay.search("n").getContents());
+		System.out.println(splay.search("e").getContents());
 		System.out.println();
 		splay.print();
 		
+		System.out.println();
+		System.out.println(splay.search("k").getContents());
+		System.out.println();
+		splay.print();
+		
+		System.out.println();
+		System.out.println(splay.search("b").getContents());
+		System.out.println();
+		splay.print();
 	}
 }

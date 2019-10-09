@@ -6,6 +6,7 @@ public class SplayTreeNode<T>{
 	private SplayTreeNode<T> rightChild;
 	private SplayTreeNode<T> leftChild;
 	private T contents;
+	private int balance;
 	
 	
 	public SplayTreeNode(T pContents) {
@@ -13,6 +14,7 @@ public class SplayTreeNode<T>{
 		this.rightChild = null;
 		this.leftChild = null;
 		this.contents = pContents;
+		this.balance = 0;
 	}
 
 	public SplayTreeNode<T> getFather() {
@@ -45,6 +47,24 @@ public class SplayTreeNode<T>{
 
 	public void setContents(T pContents) {
 		this.contents = pContents;
+	}
+	
+	public int getBalance() {
+		return this.balance;
+	}
+	
+	public void setBalance(int pBalance) {
+		this.balance = pBalance;
+	}
+	
+	@Override
+	public boolean equals(Object pOther) {
+		if (this == pOther) {
+			return true;
+		} else if(pOther == null) {
+			return false;
+		}
+		return false;
 	}
 }
  

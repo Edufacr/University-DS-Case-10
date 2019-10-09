@@ -5,24 +5,36 @@ import java.lang.Comparable;
 import model.TType;
 
 public class Sensor implements Comparable<Sensor>{
+	private String[] location = new String[3];
+	private int intake;
 	private String name;
 	private TType type;
-	private int intake;
-	private String path;
 	private boolean enoughWater;
 
-	public Sensor(String pName, int pType, int pIntake, String pPath) {
-		this.name = pName;
-		this.type = TType.values()[pType];
-		this.intake = pIntake;
-		this.path = pPath;
-		this.enoughWater = false;
+	public Sensor(int pIntake, String pCanton, String pDistrito, String pBarrio){
+		intake = pIntake;
+		enoughWater = false;
+		location[0] = pCanton;
+		location[1] = pDistrito;
+		location[2] = pBarrio;
+		int typeNum = DetermineType(); 
+		name = location[typeNum];
+		type = TType.values()[typeNum];
 	}
 	public Sensor(String pName) {
 		//por mientras para la planta
 		name = pName;
 	}
-
+	private int DetermineType(){
+		int locaIndex;
+		for (locaIndex = 0; locaIndex < 3; locaIndex++) {
+			if (location[locaIndex].isEmpty()) {
+				locaIndex--;
+				break;
+			}
+		}
+		return locaIndex;
+	}
 	public String getName() {
 		return name;
 	}
@@ -47,14 +59,6 @@ public class Sensor implements Comparable<Sensor>{
 		this.intake = pIntake;
 	}
 
-	public String getPath() {
-		return path;
-	}
-
-	public void setPath(String pPath) {
-		this.path = pPath;
-	}
-	
 	public boolean getEnoughWater() {
 		return this.enoughWater;
 	}

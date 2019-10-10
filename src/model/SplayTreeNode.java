@@ -1,36 +1,20 @@
 package model;
 
 
-public class SplayTreeNode<T>{
-	private SplayTreeNode<T> father;
-	private SplayTreeNode<T> rightChild;
+import java.util.ArrayList;
+
+public class SplayTreeNode<T> {
 	private SplayTreeNode<T> leftChild;
-	private T contents;
-	private int balance;
-	
+	private SplayTreeNode<T> rightChild;
+	private String key;
+	private ArrayList<T> contents;
 	
 	public SplayTreeNode(T pContents) {
-		this.father = null;
 		this.rightChild = null;
 		this.leftChild = null;
-		this.contents = pContents;
-		this.balance = 0;
-	}
-
-	public SplayTreeNode<T> getFather() {
-		return this.father;
-	}
-
-	public void setFather(SplayTreeNode<T> pFather) {
-		this.father = pFather;
-	}
-
-	public SplayTreeNode<T> getRightChild() {
-		return this.rightChild;
-	}
-
-	public void setRightChild(SplayTreeNode<T> pRightChild) {
-		this.rightChild = pRightChild;
+		this.contents = new ArrayList<T>();
+		this.contents.add(pContents);
+		this.key = pContents.toString();
 	}
 
 	public SplayTreeNode<T> getLeftChild() {
@@ -41,20 +25,32 @@ public class SplayTreeNode<T>{
 		this.leftChild = pLeftChild;
 	}
 
-	public T getContents() {
-		return this.contents;
+	public SplayTreeNode<T> getRightChild() {
+		return this.rightChild;
 	}
 
-	public void setContents(T pContents) {
-		this.contents = pContents;
+	public void setRightChild(SplayTreeNode<T> pRightChild) {
+		this.rightChild = pRightChild;
+	}
+
+	public String getKey() {
+		return this.key;
+	}
+
+	public void setKey(String pKey) {
+		this.key = pKey;
 	}
 	
-	public int getBalance() {
-		return this.balance;
+	public void addContent(T pValue) {
+		this.contents.add(pValue);
 	}
 	
-	public void setBalance(int pBalance) {
-		this.balance = pBalance;
+	public void removeContent(T pValue) {
+		this.contents.remove(pValue);
+	}
+	
+	public ArrayList<T> getContents(){
+		return this.contents;
 	}
 	
 	@Override

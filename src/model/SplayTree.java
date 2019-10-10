@@ -77,12 +77,12 @@ public class SplayTree<T> {
 			
 			if (pValue.toString().compareTo(pNode.getLeftChild().getKey()) < 0) { // left & left -> Zig Zig
 				
-				pNode.getLeftChild().setLeftChild(splay(pNode.getLeftChild().getLeftChild(), pValue));
+				pNode.getLeftChild().setLeftChild(splay(pNode.getLeftChild().getLeftChild(), pValue));  // Recursively sets context for rotations
 				pNode = rightRotation(pNode);
 				
 			} else if (pValue.toString().compareTo(pNode.getLeftChild().getKey()) > 0) { // left & right -> Zig Zag
 				
-				pNode.getLeftChild().setRightChild(splay(pNode.getLeftChild().getRightChild(), pValue));
+				pNode.getLeftChild().setRightChild(splay(pNode.getLeftChild().getRightChild(), pValue));  // Recursively sets context for rotations
 				if (pNode.getLeftChild().getRightChild() != null) {
 					pNode.setLeftChild(leftRotation(pNode.getLeftChild()));
 				}
@@ -100,12 +100,12 @@ public class SplayTree<T> {
 			
 			if (pValue.toString().compareTo(pNode.getRightChild().getKey()) > 0) { // right & right -> Zag Zag
 				
-				pNode.getRightChild().setRightChild(splay(pNode.getRightChild().getRightChild(), pValue));
+				pNode.getRightChild().setRightChild(splay(pNode.getRightChild().getRightChild(), pValue)); // Recursively sets context for rotations
 				pNode = leftRotation(pNode);
 				
 			} else if (pValue.toString().compareTo(pNode.getRightChild().getKey()) < 0) { // right & left -> Zag Zig
 				
-				pNode.getRightChild().setLeftChild(splay(pNode.getRightChild().getLeftChild(), pValue));
+				pNode.getRightChild().setLeftChild(splay(pNode.getRightChild().getLeftChild(), pValue));  // Recursively sets context for rotations
 				if (pNode.getRightChild().getLeftChild() != null) {
 					pNode.setRightChild(rightRotation(pNode.getRightChild())); 
 				}
@@ -131,12 +131,12 @@ public class SplayTree<T> {
 			
 			if (pValue.compareTo(pNode.getLeftChild().getKey()) < 0) { // left & left -> Zig Zig
 				
-				pNode.getLeftChild().setLeftChild(splay(pNode.getLeftChild().getLeftChild(), pValue));
+				pNode.getLeftChild().setLeftChild(splay(pNode.getLeftChild().getLeftChild(), pValue)); // Recursively sets context for rotations
 				pNode = rightRotation(pNode);
 				
 			} else if (pValue.compareTo(pNode.getLeftChild().getKey()) > 0) { // left & right -> Zig Zag
 				
-				pNode.getLeftChild().setRightChild(splay(pNode.getLeftChild().getRightChild(), pValue));
+				pNode.getLeftChild().setRightChild(splay(pNode.getLeftChild().getRightChild(), pValue));  // Recursively sets context for rotations
 				if (pNode.getLeftChild().getRightChild() != null) {
 					pNode.setLeftChild(leftRotation(pNode.getLeftChild()));
 				}
@@ -154,12 +154,12 @@ public class SplayTree<T> {
 			
 			if (pValue.compareTo(pNode.getRightChild().getKey()) > 0) { // right & right -> Zag Zag
 				
-				pNode.getRightChild().setRightChild(splay(pNode.getRightChild().getRightChild(), pValue));
+				pNode.getRightChild().setRightChild(splay(pNode.getRightChild().getRightChild(), pValue)); // Recursively sets context for rotations
 				pNode = leftRotation(pNode);
 				
 			} else if (pValue.compareTo(pNode.getRightChild().getKey()) < 0) { // right & left -> Zag Zig
 				
-				pNode.getRightChild().setLeftChild(splay(pNode.getRightChild().getLeftChild(), pValue));
+				pNode.getRightChild().setLeftChild(splay(pNode.getRightChild().getLeftChild(), pValue));  // Recursively sets context for rotations
 				if (pNode.getRightChild().getLeftChild() != null) {
 					pNode.setRightChild(rightRotation(pNode.getRightChild())); 
 				}

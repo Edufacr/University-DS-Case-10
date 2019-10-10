@@ -38,8 +38,6 @@ public class SensorManager implements IConstants {
 				}
 			}
 		}
-		mainTree.Print(mainTree.getRoot());
-		splayTree.print();
 	}
 
 	public Sensor GenerateSensor(int pIntake, String pCanton, String pDistrito, String pBarrio ) {
@@ -58,8 +56,8 @@ public class SensorManager implements IConstants {
 		splayTree.delete(pNode);
 	}
 	
-	public ArrayList<NaryTreeNode<Sensor>> splaySearch(NaryTreeNode<Sensor> pNode){
-		return splayTree.search(pNode).getContents();
+	public ArrayList<NaryTreeNode<Sensor>> splaySearch(String pKey){
+		return splayTree.search(pKey).getContents();
 	}
 
 	// Recorridos excluyen la raiz

@@ -29,6 +29,10 @@ public class SensorDisplayController implements IConstants{
 		manager.DeleteSensor(pNode);
 	}
 	
+	public ArrayList<NaryTreeNode<Sensor>> search(String pKey){
+		return manager.splaySearch(pKey);
+	}
+	
 	public ArrayList<Sensor> loadJson() {
 		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
 		try {
@@ -39,10 +43,4 @@ public class SensorDisplayController implements IConstants{
 		
 		return sensorList;
 	}
-	
-	public static void main(String[] args) {
-		SensorDisplayController s = new SensorDisplayController();
-		
-	}
-	
 }

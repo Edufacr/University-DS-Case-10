@@ -3,6 +3,8 @@ package controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import java.util.ArrayList;
+
 import model.*;
 import naryTree.NaryTreeNode;
 
@@ -28,6 +30,13 @@ public class SensorDisplayController implements IConstants{
 	public void Remove(NaryTreeNode<Sensor> pNode) {
 		manager.DeleteSensor(pNode);
 	}
+	public ArrayList<FlatenedTreeNode<NaryTreeNode<Sensor>>> GetFlatenedTree(){
+		return manager.FlatenMainTree();
+	}
+	
+	public ArrayList<NaryTreeNode<Sensor>> search(String pKey){
+		return manager.splaySearch(pKey);
+	}
 	
 	public ArrayList<Sensor> loadJson() {
 		ArrayList<Sensor> sensorList = new ArrayList<Sensor>();
@@ -39,10 +48,4 @@ public class SensorDisplayController implements IConstants{
 		
 		return sensorList;
 	}
-	
-	public static void main(String[] args) {
-		SensorDisplayController s = new SensorDisplayController();
-		
-	}
-	
 }

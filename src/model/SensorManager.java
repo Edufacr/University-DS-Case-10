@@ -38,12 +38,14 @@ public class SensorManager implements IConstants {
 				}
 			}
 		}
-		mainTree.Print(mainTree.getRoot());
-		splayTree.print();
 	}
 
 	public Sensor GenerateSensor(int pIntake, String pCanton, String pDistrito, String pBarrio ) {
 		return new Sensor(pIntake,pCanton,pDistrito,pBarrio);
+	}
+
+	public FlatenedTreeNode<NaryTreeNode<Sensor>> GenerateFlatenedTreeNode(NaryTreeNode<Sensor> pNode,int pDepth) {
+		return new FlatenedTreeNode<NaryTreeNode<Sensor>>(pNode, pDepth);
 	}
 
 	public NaryTreeNode<Sensor> AddSensor(Sensor pSensor, NaryTreeNode<Sensor> pParentNaryNode) {
@@ -58,8 +60,8 @@ public class SensorManager implements IConstants {
 		splayTree.delete(pNode);
 	}
 	
-	public ArrayList<NaryTreeNode<Sensor>> splaySearch(NaryTreeNode<Sensor> pNode){
-		return splayTree.search(pNode).getContents();
+	public ArrayList<NaryTreeNode<Sensor>> splaySearch(String pKey){
+		return splayTree.search(pKey).getContents();
 	}
 
 	// Recorridos excluyen la raiz
@@ -102,4 +104,17 @@ public class SensorManager implements IConstants {
 		}
 	}
 
+	public ArrayList<FlatenedTreeNode<NaryTreeNode<Sensor>>> FlatenMainTree(){
+		ArrayList<FlatenedTreeNode<NaryTreeNode<Sensor>>> retList = new ArrayList<FlatenedTreeNode<NaryTreeNode<Sensor>>>();
+		for (NaryTreeNode<Sensor> child : mainTree.getRoot().getChildrenList()) {
+			FlatenMainTree(child, retList, 1);
+		}
+		return retList;
+	}
+	private void FlatenMainTree(NaryTreeNode<Sensor> pNode,ArrayList<FlatenedTreeNode<NaryTreeNode<Sensor>>> pRetList,int pDepth){
+		pRetList.add(GenerateFlatenedTreeNode(pNode, pDepth));
+		for (NaryTreeNode<Sensor> child : pNode.getChildrenList()) {
+			FlatenMainTree(child, pRetList,pDepth++);
+		}
+	}
 }

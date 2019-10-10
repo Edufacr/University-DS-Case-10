@@ -6,6 +6,7 @@ import naryTree.NaryTreeNode;
 import model.Sensor;
 import View.GUI;
 
+
 public class NodeButton extends JButton{
 	
 	private NaryTreeNode<Sensor> contents;

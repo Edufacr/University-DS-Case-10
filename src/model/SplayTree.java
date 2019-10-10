@@ -333,6 +333,10 @@ public class SplayTree<T>{
 		return false;
 	}
 	
+	public void getRoot() {
+		System.out.println(this.root.getContents());
+	}
+	
 	
 	public static void main(String[] args) {
 		SplayTree<String> splay = new SplayTree<String>();
@@ -351,20 +355,17 @@ public class SplayTree<T>{
 		splay.add("n");
 		splay.add("m");
 		splay.add("o");
-		splay.print();
 		
-		System.out.println();
-		System.out.println(splay.search("e").getContents());
-		System.out.println();
-		splay.print();
 		
-		System.out.println();
-		System.out.println(splay.search("k").getContents());
+		splay.search("e");
 		System.out.println();
 		splay.print();
 		
+		splay.search("k");
 		System.out.println();
-		System.out.println(splay.search("b").getContents());
+		splay.print();
+		
+		splay.search("b");
 		System.out.println();
 		splay.print();
 	}

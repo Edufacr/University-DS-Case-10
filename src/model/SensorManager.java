@@ -12,20 +12,20 @@ public class SensorManager implements IConstants {
 	private IntakeOscilator intakeCalc;
 
 	public SensorManager() {
-		CreateSensorTree();
 		splayTree = new SplayTree<NaryTreeNode<Sensor>>();
 		intakeCalc = new IntakeOscilator();
 	}
 
-	private void CreateSensorTree() {
+	public void CreateSensorTree(int pCapacity) {
 		//Lo crea con la planta de root
-		mainTree = new NaryTree<Sensor>(new NaryTreeNode<Sensor>(new Sensor("Planta",WATERPLANT_CAPACITY)));
+		mainTree = new NaryTree<Sensor>(new NaryTreeNode<Sensor>(new Sensor("Planta", pCapacity)));
 	}
 
 	// Solo carga en la raiz del arbol
 	public void LoadSensors(ArrayList<Sensor> pInitialSensorList) {
 		for (Sensor sensor : pInitialSensorList) {
-			AddSensor(sensor, mainTree.getRoot());
+			//AddSensor(sensor, mainTree.getRoot());
+			System.out.println(sensor.getType());
 		}
 	}
 

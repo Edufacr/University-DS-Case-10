@@ -18,8 +18,8 @@ public class Sensor implements Comparable<Sensor>{
 		location[1] = pDistrito;
 		location[2] = pBarrio;
 		int typeNum = DetermineType(); 
-		name = location[typeNum];
-		type = TType.values()[typeNum];
+		name = location[typeNum - 1];
+		type = TType.values()[typeNum - 1];
 	}
 	public Sensor(String pName,int pIntake) {
 		//por mientras para la planta
@@ -28,14 +28,13 @@ public class Sensor implements Comparable<Sensor>{
 		intake = pIntake;
 	}
 	private int DetermineType(){
-		int locaIndex;
-		for (locaIndex = 0; locaIndex < 3; locaIndex++) {
-			if (location[locaIndex].isEmpty()) {
-				locaIndex--;
+		int localIndex;
+		for (localIndex = 0; localIndex < 3; localIndex++) {
+			if (location[localIndex].isEmpty()) {
 				break;
 			}
 		}
-		return locaIndex;
+		return localIndex--;
 	}
 	public String getName() {
 		return name;

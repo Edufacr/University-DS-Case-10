@@ -2,17 +2,22 @@ package View;
 
 import java.util.ArrayList;
 import javax.swing.*;
+
+import java.awt.Dimension;
 import java.awt.event.*;
+import java.awt.GridLayout;
 import naryTree.NaryTreeNode;
 import model.Sensor;
 import View.NodeButton;
 import controller.SensorDisplayController;
+import model.FlatenedTreeNode;
 import model.IConstants;
+
 
 public class GUI implements IConstants{
 	//Controller
 	SensorDisplayController controller;
-	
+	//MainWindow
 	private JFrame frame;
 	private JTextField searchBar;
 	private JButton searchButton;
@@ -20,6 +25,9 @@ public class GUI implements IConstants{
 	private JButton removeButton;
 	private NaryTreeNode<Sensor> selectedNode;
 	private ArrayList<NodeButton> sensors;
+
+	//MainTree Display
+	JPanel treeDisplay;
 	
 	
 	public GUI() {
@@ -41,6 +49,10 @@ public class GUI implements IConstants{
 	    removeButton = new JButton("-");
 	    removeButton.setBounds(SCREEN_WIDTH - 160, SCREEN_HEIGHT - 100, 40, 40);
 	    removeButton.addActionListener(this.removeSensor());
+	    
+	    
+		CreateTreeDisplay();
+	    
 	    
 	    frame.add(this.searchButton);
 	    frame.add(this.searchBar);
@@ -145,11 +157,41 @@ public class GUI implements IConstants{
 	public void setSelectedNode(NaryTreeNode<Sensor> pSelected) {
 		this.selectedNode = pSelected; 
 	}
+	//SetUp methods
+	public void CreateTreeDisplay() {
+        treeDisplay = new JPanel();
+        treeDisplay.setLayout(new GridLayout());
+        JScrollPane scrollPane = new JScrollPane(treeDisplay,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        scrollPane.setMinimumSize(new Dimension(MAINSCROLLPANEL_WIDTH,MAINSCROLLPANEL_HEIGHT));
+		scrollPane.setPreferredSize(new Dimension(MAINSCROLLPANEL_WIDTH,MAINSCROLLPANEL_HEIGHT));
+		scrollPane.setBounds(MAINSCROLLPANEL_X,MAINSCROLLPANEL_Y,MAINSCROLLPANEL_WIDTH,MAINSCROLLPANEL_HEIGHT);
+        frame.add(scrollPane);
+	}
+	public void Refresh(){
+		frame.revalidate();
+		frame.repaint();
+	}
+	//Draw Methods 
+	public void DrawMain() {
+		DrawMain(controller.GetFlatenedTree());
+	}
+	public void DrawMain(ArrayList<FlatenedTreeNode<NaryTreeNode<Sensor>>> pFlatTree){
+		for (FlatenedTreeNode<NaryTreeNode<Sensor>> flatNode : pFlatTree) {
+			treeDisplay.add(GenerateNodeButton(flatNode.getTreeNode()));
+		}
+	}
+
+	//Create Components
+	public NodeButton GenerateNodeButton(NaryTreeNode<Sensor> pNaryNode){
+		return new NodeButton(pNaryNode,this);
+	}
+
+
 	
 	public static void main(String[] args) {  
 		
 		GUI gui = new GUI();
-	    
+		gui.DrawMain();
 	    
 	}  
 }

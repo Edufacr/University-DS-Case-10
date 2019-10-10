@@ -44,6 +44,10 @@ public class SensorManager implements IConstants {
 		return new Sensor(pIntake,pCanton,pDistrito,pBarrio);
 	}
 
+	public FlatenedTreeNode<NaryTreeNode<Sensor>> GenerateFlatenedTreeNode(NaryTreeNode<Sensor> pNode,int pDepth) {
+		return new FlatenedTreeNode<NaryTreeNode<Sensor>>(pNode, pDepth);
+	}
+
 	public NaryTreeNode<Sensor> AddSensor(Sensor pSensor, NaryTreeNode<Sensor> pParentNaryNode) {
 		NaryTreeNode<Sensor> node = new NaryTreeNode<Sensor>(pSensor);
 		mainTree.AddTo(pParentNaryNode, node);
@@ -100,4 +104,17 @@ public class SensorManager implements IConstants {
 		}
 	}
 
+	public ArrayList<FlatenedTreeNode<NaryTreeNode<Sensor>>> FlatenMainTree(){
+		ArrayList<FlatenedTreeNode<NaryTreeNode<Sensor>>> retList = new ArrayList<FlatenedTreeNode<NaryTreeNode<Sensor>>>();
+		for (NaryTreeNode<Sensor> child : mainTree.getRoot().getChildrenList()) {
+			FlatenMainTree(child, retList, 1);
+		}
+		return retList;
+	}
+	private void FlatenMainTree(NaryTreeNode<Sensor> pNode,ArrayList<FlatenedTreeNode<NaryTreeNode<Sensor>>> pRetList,int pDepth){
+		pRetList.add(GenerateFlatenedTreeNode(pNode, pDepth));
+		for (NaryTreeNode<Sensor> child : pNode.getChildrenList()) {
+			FlatenMainTree(child, pRetList,pDepth++);
+		}
+	}
 }

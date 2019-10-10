@@ -1,11 +1,11 @@
-package View;
+package view;
 
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.event.*;
 import naryTree.NaryTreeNode;
 import model.Sensor;
-import View.NodeButton;
+import view.NodeButton;
 import model.IConstants;
 
 public class GUI implements IConstants{

@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 
 import naryTree.*;
+//import model.SplayTree;
+//import model.SplayTreeNode;
 
 public class SensorManager implements IConstants {
 	private NaryTree<Sensor> mainTree;
@@ -32,14 +34,17 @@ public class SensorManager implements IConstants {
 	public void AddSensor(Sensor pSensor, NaryTreeNode<Sensor> pParentNaryNode) {
 		NaryTreeNode<Sensor> node = new NaryTreeNode<Sensor>(pSensor);
 		mainTree.AddTo(pParentNaryNode, node);
-		//splayTree.add(node);
+		splayTree.add(node);
 	}
 
 	public void DeleteSensor(NaryTreeNode<Sensor> pNode) {
 		mainTree.DeleteNode(pNode);
-		// splayTree.deleteNode();
+		splayTree.delete(pNode);
 	}
-	// Funciones de buscar con el splay aqui
+	
+	public ArrayList<NaryTreeNode<Sensor>> splaySearch(NaryTreeNode<Sensor> pNode){
+		return splayTree.search(pNode).getContents();
+	}
 
 	// Recorridos excluyen la raiz
 	public void ChangeValues() {

@@ -67,13 +67,13 @@ public class SplayTree<T> {
 	}
 	
 	public SplayTreeNode<T> splay(SplayTreeNode<T> pNode, T pValue){
-		if (pNode == null || pValue.toString().compareTo(pNode.getKey()) == 0) { // Empty tree || pValue already in tree
+		if (pNode == null || pValue.toString().compareTo(pNode.getKey()) == 0) { // Empty tree or pValue already in tree
 			return pNode;
 		}
 		
 		if (pValue.toString().compareTo(pNode.getKey()) < 0) { // pValue < pNode.getContents()
 			
-			if (pNode.getLeftChild() == null) { return pNode; }
+			if (pNode.getLeftChild() == null) { return pNode; } // didn't find pValue
 			
 			if (pValue.toString().compareTo(pNode.getLeftChild().getKey()) < 0) { // left & left -> Zig Zig
 				
@@ -96,7 +96,7 @@ public class SplayTree<T> {
 			
 		} else if (pValue.toString().compareTo(pNode.getKey()) > 0) { // pValue > pNode.getContents()
 			
-			if (pNode.getRightChild() == null) { return pNode; }
+			if (pNode.getRightChild() == null) { return pNode; } // didn't find pValue
 			
 			if (pValue.toString().compareTo(pNode.getRightChild().getKey()) > 0) { // right & right -> Zag Zag
 				
@@ -169,22 +169,28 @@ public class SplayTree<T> {
 	
 	public static void main(String[] args) {
 		SplayTree<String> splay = new SplayTree<String>();
-		splay.add("h");
-		splay.add("d");
+//		splay.add("h");
+//		splay.add("d");
+//		splay.add("b");
+//		splay.add("a");
+//		splay.add("c");
+//		splay.add("f");
+//		splay.add("e");
+//		splay.add("g");
+//		splay.add("l");
+//		splay.add("j");
+//		splay.add("i");
+//		splay.add("k");
+//		splay.add("n");
+//		splay.add("m");
+//		splay.add("o");
+//		splay.add("h");
+//		splay.print();
+		
 		splay.add("b");
-		splay.add("a");
+		splay.add("d");
 		splay.add("c");
-		splay.add("f");
-		splay.add("e");
-		splay.add("g");
-		splay.add("l");
-		splay.add("j");
-		splay.add("i");
-		splay.add("k");
-		splay.add("n");
-		splay.add("m");
-		splay.add("o");
-		splay.add("h");
+		splay.add("a");
 		splay.print();
 	}
 	

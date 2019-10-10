@@ -16,4 +16,8 @@ public class IntakeOscilator implements IConstants{
 		percent *= 0.01;
 		return percent;
 	}
+
+	public int getIntake(int pIntake){
+		return pIntake + (pIntake * oscilationPercentage());
+	}
 }

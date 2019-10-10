@@ -6,9 +6,12 @@ import java.awt.event.*;
 import naryTree.NaryTreeNode;
 import model.Sensor;
 import view.NodeButton;
+import controller.SensorDisplayController;
 import model.IConstants;
 
 public class GUI implements IConstants{
+	//Controller
+	SensorDisplayController controller;
 	
 	private JFrame frame;
 	private JTextField searchBar;

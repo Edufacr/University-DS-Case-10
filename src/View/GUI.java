@@ -6,9 +6,12 @@ import java.awt.event.*;
 import naryTree.NaryTreeNode;
 import model.Sensor;
 import View.NodeButton;
+import controller.SensorDisplayController;
 import model.IConstants;
 
 public class GUI implements IConstants{
+	//Controller
+	SensorDisplayController controller;
 	
 	private JFrame frame;
 	private JTextField searchBar;
@@ -68,7 +71,6 @@ public class GUI implements IConstants{
 	public ActionListener addSensor() {
 		ActionListener act = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				
 				
 			}

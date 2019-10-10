@@ -76,6 +76,10 @@ public class Sensor implements Comparable<Sensor>{
 		this.intake *= pRange;
 	}
 	
+	public String[] getLocation() {
+		return this.location;
+	}
+	
 	@Override
 	// Lexicographically compares the name of both sensors. If the sensor's name is bigger than the other sensor's name, returns a 1. Returns 0 if equal or -1 if smaller
 	public int compareTo(Sensor pOtherSensor) {

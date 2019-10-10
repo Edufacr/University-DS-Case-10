@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.ArrayList;
+
 import model.*;
 import naryTree.NaryTreeNode;
 
@@ -17,6 +19,9 @@ public class SensorDisplayController {
 	}
 	public void Remove(NaryTreeNode<Sensor> pNode) {
 		manager.DeleteSensor(pNode);
+	}
+	public ArrayList<FlatenedTreeNode<NaryTreeNode<Sensor>>> GetFlatenedTree(){
+		return manager.FlatenMainTree();
 	}
 	
 }

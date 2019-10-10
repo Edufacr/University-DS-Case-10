@@ -1,372 +1,256 @@
 package model;
 
 import model.SplayTreeNode;
-import java.lang.Comparable;
 
 
-public class SplayTree<T>{
-
+public class SplayTree<T> {
 	private SplayTreeNode<T> root;
-	private boolean searched;
-	private boolean isEmpty;
 	
 	public SplayTree() {
 		this.root = null;
-		this.searched = false;
-		this.isEmpty = true;
 	}
-
+	
+	public SplayTreeNode<T> getRoot(){
+		return this.root;
+	}
+	
 	public void add(T pValue) {
+		this.root = add(this.root, pValue);
+	}
+	
+	private SplayTreeNode<T> add(SplayTreeNode<T> pNode, T pValue){
 		
-		if (this.isEmpty) {
-			this.isEmpty = false;
+		if (pNode == null) {
 			SplayTreeNode<T> node = new SplayTreeNode<T>(pValue);
-			this.root = node;
-			return;
+			return node;
 		}
 		
-		Comparable<T> cValue = (Comparable<T>) pValue;
+		pNode = splay(pNode, pValue); // gets node for insertion
 		
-		if(cValue.compareTo(this.root.getContents()) < 0) { // pValue < root.getValue()
-			if (this.root.getLeftChild() == null) {
-				SplayTreeNode<T> node = new SplayTreeNode<T>(pValue);
-				this.root.setLeftChild(node);
-				node.setFather(this.root);
-				return;
-			}
-			addContinue(this.root.getLeftChild(), pValue);
-		} else if(cValue.compareTo(this.root.getContents()) > 0){ // pValue > pNode.getValue()
-			if (this.root.getRightChild() == null) {
-				SplayTreeNode<T> node = new SplayTreeNode<T>(pValue);
-				this.root.setRightChild(node);
-				node.setFather(this.root);
-				return;
-			}
-			addContinue(this.root.getRightChild(), pValue);
+		if (pValue.toString().compareTo(pNode.getKey()) == 0) { 
+			pNode.addContent(pValue);
+			return pNode; 
+		} 
+		
+		SplayTreeNode<T> node = new SplayTreeNode<T>(pValue);
+		
+		if (pValue.toString().compareTo(pNode.getKey()) < 0) {
+			node.setRightChild(pNode);
+			node.setLeftChild(pNode.getLeftChild());
+			pNode.setLeftChild(null);
+		} else{
+			node.setLeftChild(pNode);
+			node.setRightChild(pNode.getRightChild());
+			pNode.setRightChild(null);
 		}
+		return node;
 	}
-
 	
-	private void addContinue(SplayTreeNode<T> pCurrent, T pValue){
-		Comparable<T> cValue = (Comparable<T>) pValue;
+	public SplayTreeNode<T> leftRotation(SplayTreeNode<T> pNode){
+		SplayTreeNode<T> temp = pNode.getRightChild();
 		
-		if(cValue.compareTo(pCurrent.getContents()) < 0) { // pValue < root.getValue()
-			if (pCurrent.getLeftChild() == null) {
-				SplayTreeNode<T> node = new SplayTreeNode<T>(pValue);
-				pCurrent.setLeftChild(node);
-				node.setFather(pCurrent);
-				return;
-			}
-			addContinue(pCurrent.getLeftChild(), pValue);
-			return;
-		} else if(cValue.compareTo(pCurrent.getContents()) > 0){ // pValue > pNode.getValue()
-			if (pCurrent.getRightChild() == null) {
-				SplayTreeNode<T> node = new SplayTreeNode<T>(pValue);
-				pCurrent.setRightChild(node);
-				node.setFather(pCurrent);
-				return;
-			}
-			addContinue(pCurrent.getRightChild(), pValue);
-			return;
-		}
-	}
-
-	
-	// Splay Functions
-	private void zig(SplayTreeNode<T> pSearched) {
-		SplayTreeNode<T> oldRoot = this.root;
-		if (root.getLeftChild() != null) {
-			if (root.getLeftChild().equals(pSearched)) {
-				if (pSearched.getRightChild() != null){
-					oldRoot.setLeftChild(pSearched.getRightChild());
-					pSearched.getRightChild().setFather(oldRoot);
-				} else {oldRoot.setLeftChild(null);}
-				this.root = pSearched;
-				this.root.setRightChild(oldRoot);
-				this.root.setFather(null);
-				oldRoot.setFather(this.root);
-			} 
-		} else if(root.getRightChild().equals(pSearched)) {
-			if (pSearched.getLeftChild() != null) {
-				oldRoot.setRightChild(pSearched.getLeftChild());
-				pSearched.getLeftChild().setFather(oldRoot);
-			} else {oldRoot.setRightChild(null);}
-			this.root = pSearched;
-			this.root.setLeftChild(oldRoot);
-			this.root.setFather(null);
-			oldRoot.setFather(this.root);
-		}
-	}
-
-	
-	private void zigZig(SplayTreeNode<T> pSearched) {
-		SplayTreeNode<T> father = pSearched.getFather();
-		SplayTreeNode<T> grandFather = father.getFather();
-		SplayTreeNode<T> greatGrandFather = grandFather.getFather();
+		pNode.setRightChild(temp.getLeftChild());
+		temp.setLeftChild(pNode);
 		
-		if (father.getLeftChild() != null) {
-			if (father.getLeftChild().equals(pSearched)) {
+		
+		return temp;
+	}
+	
+	public SplayTreeNode<T> rightRotation(SplayTreeNode<T> pNode){
+		SplayTreeNode<T> temp = pNode.getLeftChild();
+		
+		pNode.setLeftChild(temp.getRightChild());
+		temp.setRightChild(pNode);
+		
+		
+		return temp;
+	}
+	
+	public SplayTreeNode<T> splay(SplayTreeNode<T> pNode, T pValue){
+		if (pNode == null || pValue.toString().compareTo(pNode.getKey()) == 0) { // Empty tree or pValue already in tree
+			return pNode;
+		}
+		
+		if (pValue.toString().compareTo(pNode.getKey()) < 0) { // pValue < pNode.getContents()
+			
+			if (pNode.getLeftChild() == null) { return pNode; } // didn't find pValue
+			
+			if (pValue.toString().compareTo(pNode.getLeftChild().getKey()) < 0) { // left & left -> Zig Zig
 				
-				SplayTreeNode<T> otherChild = father.getRightChild();
-				if (otherChild != null) { otherChild.setFather(grandFather); }
-				grandFather.setLeftChild(otherChild); 
+				pNode.getLeftChild().setLeftChild(splay(pNode.getLeftChild().getLeftChild(), pValue));
+				pNode = rightRotation(pNode);
 				
-					
-				father.setRightChild(grandFather); 
-				pSearched.setFather(greatGrandFather);
+			} else if (pValue.toString().compareTo(pNode.getLeftChild().getKey()) > 0) { // left & right -> Zig Zag
 				
-				if (greatGrandFather != null) {
-					grandFather.setFather(father);
-					
-					if (greatGrandFather.getLeftChild().equals(grandFather)) {
-						greatGrandFather.setLeftChild(pSearched);
-					} else {
-						greatGrandFather.setRightChild(pSearched);
-					}
-					
-				} else {this.root = pSearched;}
-				
-				father.setLeftChild(pSearched.getRightChild());
-				if (pSearched.getRightChild() != null) {
-					pSearched.getRightChild().setFather(father);
+				pNode.getLeftChild().setRightChild(splay(pNode.getLeftChild().getRightChild(), pValue));
+				if (pNode.getLeftChild().getRightChild() != null) {
+					pNode.setLeftChild(leftRotation(pNode.getLeftChild()));
 				}
 				
-				father.setFather(pSearched);
-				pSearched.setRightChild(father);
-			} else if (father.getRightChild().equals(pSearched)) {
+			}
 			
-				SplayTreeNode<T> otherChild = father.getLeftChild();
-				if (otherChild != null) { otherChild.setFather(grandFather); }
-					grandFather.setRightChild(otherChild);
+			if (pNode.getLeftChild() == null) {
+				return pNode;
+			} else { return rightRotation(pNode); }
+			
+			
+		} else if (pValue.toString().compareTo(pNode.getKey()) > 0) { // pValue > pNode.getContents()
+			
+			if (pNode.getRightChild() == null) { return pNode; } // didn't find pValue
+			
+			if (pValue.toString().compareTo(pNode.getRightChild().getKey()) > 0) { // right & right -> Zag Zag
 				
-				father.setLeftChild(grandFather);
-				pSearched.setFather(greatGrandFather);
+				pNode.getRightChild().setRightChild(splay(pNode.getRightChild().getRightChild(), pValue));
+				pNode = leftRotation(pNode);
 				
-				if (greatGrandFather != null) {
-					grandFather.setFather(father);
-					
-					if (greatGrandFather.getLeftChild().equals(grandFather)) {
-						greatGrandFather.setLeftChild(pSearched);
-					} else {
-						greatGrandFather.setRightChild(pSearched);
-					}
-					
-				} else {this.root = pSearched;}
+			} else if (pValue.toString().compareTo(pNode.getRightChild().getKey()) < 0) { // right & left -> Zag Zig
 				
-				father.setRightChild(pSearched.getLeftChild());
-				if (pSearched.getLeftChild() != null) {
-					pSearched.getLeftChild().setFather(father);
+				pNode.getRightChild().setLeftChild(splay(pNode.getRightChild().getLeftChild(), pValue));
+				if (pNode.getRightChild().getLeftChild() != null) {
+					pNode.setRightChild(rightRotation(pNode.getRightChild())); 
 				}
 				
-				father.setFather(pSearched);
-				pSearched.setLeftChild(father);
 			}
-		}
-	}
-
-	
-	private void zigZag(SplayTreeNode<T> pSearched) {
-		SplayTreeNode<T> father = pSearched.getFather();
-		SplayTreeNode<T> grandFather = father.getFather();
-		SplayTreeNode<T> greatGrandFather = grandFather.getFather(); // may be null
-		
-		if (father.getRightChild() != null) {
-			if (father.getRightChild().equals(pSearched)) {  // may be null
-				
-				if (pSearched.getLeftChild() != null) { pSearched.getLeftChild().setFather(father);}
-				father.setRightChild(pSearched.getLeftChild());
-				
-				pSearched.setLeftChild(father);
-				father.setFather(pSearched);
-				
-				grandFather.setLeftChild(pSearched.getRightChild()); 
-				if (pSearched.getRightChild() != null) { pSearched.getRightChild().setFather(grandFather);}
-				
-				pSearched.setRightChild(grandFather);
-				grandFather.setFather(pSearched);
-				
-				pSearched.setFather(greatGrandFather);
-				if (greatGrandFather != null) {
-					if (greatGrandFather.getLeftChild().equals(grandFather)) { 
-						greatGrandFather.setLeftChild(pSearched);
-					} else {
-						greatGrandFather.setRightChild(pSearched);
-					}
-				} else {this.root = pSearched;}
-			} else if(father.getLeftChild().equals(pSearched)) {
 			
-				if (pSearched.getRightChild() != null) { pSearched.getRightChild().setFather(father); }
-				father.setLeftChild(pSearched.getRightChild());
+			if (pNode.getRightChild() == null) {
+				return pNode;
+			} else { return leftRotation(pNode); }
+			
+		}
+		return pNode;
+	}
+	
+	public SplayTreeNode<T> splay(SplayTreeNode<T> pNode, String pValue){
+		if (pNode == null || pValue.compareTo(pNode.getKey()) == 0) { // Empty tree or pValue already in tree
+			return pNode;
+		}
+		
+		if (pValue.compareTo(pNode.getKey()) < 0) { // pValue < pNode.getContents()
+			
+			if (pNode.getLeftChild() == null) { return pNode; } // didn't find pValue
+			
+			if (pValue.compareTo(pNode.getLeftChild().getKey()) < 0) { // left & left -> Zig Zig
 				
-				pSearched.setRightChild(father);
-				father.setFather(pSearched);
+				pNode.getLeftChild().setLeftChild(splay(pNode.getLeftChild().getLeftChild(), pValue));
+				pNode = rightRotation(pNode);
 				
-				grandFather.setRightChild(pSearched.getLeftChild());
-				if (pSearched.getLeftChild() != null) { pSearched.getLeftChild().setFather(grandFather); }
+			} else if (pValue.compareTo(pNode.getLeftChild().getKey()) > 0) { // left & right -> Zig Zag
 				
-				pSearched.setLeftChild(grandFather);
-				grandFather.setFather(pSearched);
+				pNode.getLeftChild().setRightChild(splay(pNode.getLeftChild().getRightChild(), pValue));
+				if (pNode.getLeftChild().getRightChild() != null) {
+					pNode.setLeftChild(leftRotation(pNode.getLeftChild()));
+				}
 				
-				pSearched.setFather(greatGrandFather);
-				if (greatGrandFather != null) {
-					if (greatGrandFather.getLeftChild().equals(grandFather)) {
-						greatGrandFather.setLeftChild(pSearched);
-					} else {
-						greatGrandFather.setRightChild(pSearched);
-					}
-				} else {this.root = pSearched;}
 			}
+			
+			if (pNode.getLeftChild() == null) {
+				return pNode;
+			} else { return rightRotation(pNode); }
+			
+			
+		} else if (pValue.compareTo(pNode.getKey()) > 0) { // pValue > pNode.getContents()
+			
+			if (pNode.getRightChild() == null) { return pNode; } // didn't find pValue
+			
+			if (pValue.compareTo(pNode.getRightChild().getKey()) > 0) { // right & right -> Zag Zag
+				
+				pNode.getRightChild().setRightChild(splay(pNode.getRightChild().getRightChild(), pValue));
+				pNode = leftRotation(pNode);
+				
+			} else if (pValue.compareTo(pNode.getRightChild().getKey()) < 0) { // right & left -> Zag Zig
+				
+				pNode.getRightChild().setLeftChild(splay(pNode.getRightChild().getLeftChild(), pValue));
+				if (pNode.getRightChild().getLeftChild() != null) {
+					pNode.setRightChild(rightRotation(pNode.getRightChild())); 
+				}
+				
+			}
+			
+			if (pNode.getRightChild() == null) {
+				return pNode;
+			} else { return leftRotation(pNode); }
+			
 		}
+		return pNode;
 	}
 	
-	// AVL Rotations
-	
-	public void avlLeftLeft() {}
-	
-	public void avlRightRight() {}
-	
-	public void avlLeftRight() {}
-	
-	public void avlRightLeft() {}
-	
-	public SplayTreeNode<T> search(T pValue) {
-		
-		if (!this.searched) {
-			this.searched = true;
-		}
-		
-		
-		Comparable<T> cValue = (Comparable<T>) pValue;
-		
-		
-		if (cValue.compareTo(this.root.getContents()) == 0) {
-			return this.root;
-		} else if(cValue.compareTo(this.root.getContents()) < 0) { // pValue < pNode.getValue()
-			this.root = continueSearch(pValue, this.root.getLeftChild());
-			return this.root;
-		} else if(cValue.compareTo(this.root.getContents()) > 0){ // pValue > pNode.getValue()
-			this.root = continueSearch(pValue, this.root.getRightChild());
-			return this.root;
-		} return null;
+	public SplayTreeNode<T> search(T pValue){
+		this.root = splay(this.root, pValue);
+		return this.root;
 	}
 	
+	public SplayTreeNode<T> search(String pKey){
+		this.root = splay(this.root, pKey);
+		return this.root;
+	}
 	
-	private SplayTreeNode<T> continueSearch(T pValue, SplayTreeNode<T> pNode) {
-		
-		Comparable<T> cValue = (Comparable<T>) pValue;
+	public SplayTreeNode <T> delete(T pValue){
+		this.root = delete(this.root, pValue);
+		return this.root;
+	}
+	
+	private SplayTreeNode<T> delete(SplayTreeNode<T> pNode, T pValue){
 		
 		if (pNode == null) {
 			return null;
 		}
 		
-		if (cValue.compareTo(pNode.getContents()) == 0) {
-			this.splayMove(pNode);
-			return pNode;
-		} else if(cValue.compareTo(pNode.getContents()) < 0) { // pValue < pNode.getValue()
-			return continueSearch(pValue, pNode.getLeftChild());
-		} else if(cValue.compareTo(pNode.getContents()) > 0){ // pValue > pNode.getValue()
-			return continueSearch(pValue, pNode.getRightChild());
-		} 
+		pNode = splay(pNode, pValue); // Brings the desired value to the root of the tree
 		
-		return null;
+		if (pValue.toString().compareTo(pNode.getKey()) != 0) { // Value not found
+			return pNode;
+		}
+		
+		if (pNode.getLeftChild() == null) {
+			pNode = pNode.getRightChild(); // new root as there is no left sub-tree
+		} else {
+			SplayTreeNode<T> old = pNode;
+			pNode = splay(pNode.getLeftChild(), pValue);
+			pNode.setRightChild(old.getRightChild());
+		}
+		return pNode;
 	}
 	
-	private void splayMove(SplayTreeNode<T> pNode) {
-		
-		if (pNode.equals(this.root)) {
-			return;
-		} else if (pNode.getFather().equals(this.root)){
-			this.zig(pNode);
-			return;
-		}
-		
-		SplayTreeNode<T> father = pNode.getFather();
-		SplayTreeNode<T> grandFather = father.getFather();
-		
-		if (grandFather.getLeftChild().equals(father)) {
-			if (father.getLeftChild().equals(pNode)) {
-				this.zigZig(pNode);
-				splayMove(pNode);
-				return;
-			} else {
-				this.zigZag(pNode);
-				splayMove(pNode);
-				return;
-			}
-		} else if (grandFather.getRightChild().equals(father)) {
-			if (father.getRightChild().equals(pNode)) {
-				this.zigZig(pNode);
-				splayMove(pNode);
-				return;
-			} else if (father.getLeftChild().equals(pNode)){
-				this.zigZag(pNode);
-				splayMove(pNode);
-				return;
-			}
-		}
-	}
 	
 	public void print() {
 		printPreorder(this.root);
 	}
 	
-	
 	private void printPreorder(SplayTreeNode<T> pNode) {
-		
 		if (pNode == null) {
 			return;
 		}
-		
 		System.out.println(pNode.getContents());
-		
 		printPreorder(pNode.getLeftChild());
 		printPreorder(pNode.getRightChild());
-	}
-	
-	public boolean delete(T pValue) {
-		if (search(pValue) != null) {
-			
-			
-			
-			return true;
-		} 
-		return false;
-	}
-	
-	public void getRoot() {
-		System.out.println(this.root.getContents());
 	}
 	
 	
 	public static void main(String[] args) {
 		SplayTree<String> splay = new SplayTree<String>();
-		splay.add("h");
-		splay.add("d");
+//		splay.add("h");
+//		splay.add("d");
+//		splay.add("b");
+//		splay.add("a");
+//		splay.add("c");
+//		splay.add("f");
+//		splay.add("e");
+//		splay.add("g");
+//		splay.add("l");
+//		splay.add("j");
+//		splay.add("i");
+//		splay.add("k");
+//		splay.add("n");
+//		splay.add("m");
+//		splay.add("o");
+//		splay.add("h");
+//		splay.print();
+		
 		splay.add("b");
-		splay.add("a");
+		splay.add("d");
 		splay.add("c");
-		splay.add("f");
-		splay.add("e");
-		splay.add("g");
-		splay.add("l");
-		splay.add("j");
-		splay.add("i");
-		splay.add("k");
-		splay.add("n");
-		splay.add("m");
-		splay.add("o");
-		
-		
-		splay.search("e");
-		System.out.println();
-		splay.print();
-		
-		splay.search("k");
-		System.out.println();
-		splay.print();
-		
-		splay.search("b");
-		System.out.println();
+		splay.add("a");
 		splay.print();
 	}
+	
 }

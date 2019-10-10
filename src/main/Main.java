@@ -2,7 +2,7 @@ package main;
 
 import java.util.ArrayList;
 
-import View.GUI;
+import view.GUI;
 import model.*;
 import naryTree.NaryTreeNode;
 

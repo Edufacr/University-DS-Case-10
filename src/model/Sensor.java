@@ -18,8 +18,8 @@ public class Sensor implements Comparable<Sensor>{
 		location[1] = pDistrito;
 		location[2] = pBarrio;
 		int typeNum = DetermineType(); 
-		name = location[typeNum];
-		type = TType.values()[typeNum];
+		name = location[typeNum - 1];
+		type = TType.values()[typeNum - 1];
 	}
 	public Sensor(String pName,int pIntake) {
 		//por mientras para la planta
@@ -28,14 +28,13 @@ public class Sensor implements Comparable<Sensor>{
 		intake = pIntake;
 	}
 	private int DetermineType(){
-		int locaIndex;
-		for (locaIndex = 0; locaIndex < 3; locaIndex++) {
-			if (location[locaIndex].isEmpty()) {
-				locaIndex--;
+		int localIndex;
+		for (localIndex = 0; localIndex < 3; localIndex++) {
+			if (location[localIndex].isEmpty()) {
 				break;
 			}
 		}
-		return locaIndex;
+		return localIndex--;
 	}
 	public String getName() {
 		return name;
@@ -77,6 +76,10 @@ public class Sensor implements Comparable<Sensor>{
 		this.intake *= pRange;
 	}
 	
+	public String[] getLocation() {
+		return this.location;
+	}
+	
 	@Override
 	// Lexicographically compares the name of both sensors. If the sensor's name is bigger than the other sensor's name, returns a 1. Returns 0 if equal or -1 if smaller
 	public int compareTo(Sensor pOtherSensor) {
@@ -89,5 +92,8 @@ public class Sensor implements Comparable<Sensor>{
 		return 0;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return this.name;
+	}
 }

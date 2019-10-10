@@ -10,21 +10,36 @@ public class SensorManager implements IConstants {
 	private IntakeOscilator intakeCalc;
 
 	public SensorManager() {
-		CreateSensorTree();
 		splayTree = new SplayTree<NaryTreeNode<Sensor>>();
 		intakeCalc = new IntakeOscilator();
 	}
 
-	private void CreateSensorTree() {
-		//Lo crea con la planta de root
-		mainTree = new NaryTree<Sensor>(new NaryTreeNode<Sensor>(new Sensor("Planta",WATERPLANT_CAPACITY)));
+	public void CreateSensorTree(int pCapacity) {
+		mainTree = new NaryTree<Sensor>(new NaryTreeNode<Sensor>(new Sensor("Planta", pCapacity)));
 	}
 
-	// Solo carga en la raiz del arbol
+	
 	public void LoadSensors(ArrayList<Sensor> pInitialSensorList) {
+
 		for (Sensor sensor : pInitialSensorList) {
-			AddSensor(sensor, mainTree.getRoot());
+			if (sensor.getType() == TType.Cantón){
+				AddSensor(sensor, mainTree.getRoot());
+			} else if (sensor.getType() == TType.Distrito) {
+				for (NaryTreeNode<Sensor> node : splayTree.search(sensor.getLocation()[0]).getContents()) {
+					if (node.getValue().getType() == TType.Cantón) {
+						AddSensor(sensor, node);
+					}
+				}
+			} else {
+				for (NaryTreeNode<Sensor> node : splayTree.search(sensor.getLocation()[1]).getContents()) {
+					if (node.getValue().getType() == TType.Distrito) {
+						AddSensor(sensor, node);
+					}
+				}
+			}
 		}
+		mainTree.Print(mainTree.getRoot());
+		splayTree.print();
 	}
 
 	public Sensor GenerateSensor(int pIntake, String pCanton, String pDistrito, String pBarrio ) {
@@ -35,17 +50,21 @@ public class SensorManager implements IConstants {
 		return new FlatenedTreeNode<NaryTreeNode<Sensor>>(pNode, pDepth);
 	}
 
-	public void AddSensor(Sensor pSensor, NaryTreeNode<Sensor> pParentNaryNode) {
+	public NaryTreeNode<Sensor> AddSensor(Sensor pSensor, NaryTreeNode<Sensor> pParentNaryNode) {
 		NaryTreeNode<Sensor> node = new NaryTreeNode<Sensor>(pSensor);
 		mainTree.AddTo(pParentNaryNode, node);
-		//splayTree.add(node);
+		splayTree.add(node);
+		return node;
 	}
 
 	public void DeleteSensor(NaryTreeNode<Sensor> pNode) {
 		mainTree.DeleteNode(pNode);
-		// splayTree.deleteNode();
+		splayTree.delete(pNode);
 	}
-	// Funciones de buscar con el splay aqui
+	
+	public ArrayList<NaryTreeNode<Sensor>> splaySearch(NaryTreeNode<Sensor> pNode){
+		return splayTree.search(pNode).getContents();
+	}
 
 	// Recorridos excluyen la raiz
 	public void ChangeValues() {

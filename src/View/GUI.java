@@ -1,4 +1,4 @@
-package View;
+package view;
 
 import java.util.ArrayList;
 import javax.swing.*;
@@ -8,7 +8,7 @@ import java.awt.event.*;
 import java.awt.GridLayout;
 import naryTree.NaryTreeNode;
 import model.Sensor;
-import View.NodeButton;
+import view.NodeButton;
 import controller.SensorDisplayController;
 import model.FlatenedTreeNode;
 import model.IConstants;

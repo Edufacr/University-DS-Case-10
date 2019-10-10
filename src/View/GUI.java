@@ -102,7 +102,6 @@ public class GUI implements IConstants{
 	public static void main(String[] args) {  
 		
 		GUI gui = new GUI();
-		
 	    
 	    
 	}  

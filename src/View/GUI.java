@@ -91,12 +91,6 @@ public class GUI implements IConstants{
 					popFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 					popFrame.setLayout(null);  
 					popFrame.setVisible(true); 
-					
-					
-//					System.out.println("Cantón: " + node.getValue().getLocation()[0] + "\nDistrito: " + node.getValue().getLocation()[1] + "\nBarrio: " + node.getValue().getLocation()[2]);
-//					System.out.println("Consumo: " + node.getValue().getIntake());
-//					System.out.println("Padre: " + node.getFather());
-//					System.out.println("Hijos: " + node.getChildrenList());
 				}
 		    }
 		};
@@ -115,7 +109,6 @@ public class GUI implements IConstants{
 			    JPanel myPanel = new JPanel();
 			    myPanel.add(new JLabel("Cantón:"));
 			    myPanel.add(fCanton);
-			    //myPanel.add(Box.createVerticalStrut(40)); // a spacer
 			    myPanel.add(new JLabel("Distrito:"));
 			    myPanel.add(fDistrito);
 			    myPanel.add(new JLabel("Barrio:"));
@@ -133,7 +126,8 @@ public class GUI implements IConstants{
 			    	String consumo = fConsumo.getText();
 			    	
 			    	controller.Add(selectedNode, Integer.valueOf(consumo), canton, distrito, barrio);
-			    	// Call function to repaint tree
+			    	DrawMain();
+					Refresh();
 			    }
 			  }
 			
@@ -147,6 +141,8 @@ public class GUI implements IConstants{
 		ActionListener act = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				controller.Remove(selectedNode);
+				DrawMain();
+				Refresh();
 			}
 		};
 		return act;
@@ -192,6 +188,7 @@ public class GUI implements IConstants{
 		
 		GUI gui = new GUI();
 		gui.DrawMain();
+		gui.Refresh();
 	    
 	}  
 }

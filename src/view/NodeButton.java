@@ -19,10 +19,9 @@ public class NodeButton extends JButton{
 		father = pFather;
 		
 		buttonAction = new ActionListener() {
-			public void actionPerformed(ActionEvent e){  
-				@SuppressWarnings("unchecked")
-				NaryTreeNode<Sensor> source = (NaryTreeNode<Sensor>) e.getSource();
-		        father.setSelectedNode(source);
+			public void actionPerformed(ActionEvent e){
+				NodeButton source = (NodeButton) e.getSource();
+		        father.setSelectedNode(source.getContents());
 		    }
 		};
 		this.addActionListener(buttonAction);

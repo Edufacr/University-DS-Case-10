@@ -22,6 +22,7 @@ public class SplayTree<T>{
 			this.isEmpty = false;
 			SplayTreeNode<T> node = new SplayTreeNode<T>(pValue);
 			this.root = node;
+			return;
 		}
 		
 		Comparable<T> cValue = (Comparable<T>) pValue;
@@ -217,6 +218,16 @@ public class SplayTree<T>{
 			}
 		}
 	}
+	
+	// AVL Rotations
+	
+	public void avlLeftLeft() {}
+	
+	public void avlRightRight() {}
+	
+	public void avlLeftRight() {}
+	
+	public void avlRightLeft() {}
 	
 	public SplayTreeNode<T> search(T pValue) {
 		

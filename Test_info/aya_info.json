@@ -12,6 +12,18 @@
 			"Consumo" : 206
 		},
 		{
+			"Cantón" : "Alajuela",
+			"Distrito" : "",
+			"Barrio" : "",
+			"Consumo" : 201
+		},
+		{
+			"Cantón" : "Cartago",
+			"Distrito" : "",
+			"Barrio" : "",
+			"Consumo" : 187
+		},
+		{
 			"Cantón" : "San José",
 			"Distrito" : "Curridabat",
 			"Barrio" : "",
@@ -22,24 +34,6 @@
 			"Distrito" : "Escazú",
 			"Barrio" : "",
 			"Consumo" : 142
-		},
-		{
-			"Cantón" : "San José",
-			"Distrito" : "Escazú",
-			"Barrio" : "Guachipelín",
-			"Consumo" : 83
-		},
-		{
-			"Cantón" : "San José",
-			"Distrito" : "Escazú",
-			"Barrio" : "San Rafael",
-			"Consumo" : 83
-		},
-		{
-			"Cantón" : "Cartago",
-			"Distrito" : "",
-			"Barrio" : "",
-			"Consumo" : 187
 		},
 		{
 			"Cantón" : "Alajuela",
@@ -64,6 +58,18 @@
 			"Distrito": "Dulce Nombre",
 			"Barrio" : "",
 			"Consumo" : 59
+		},
+		{
+			"Cantón" : "San José",
+			"Distrito" : "Escazú",
+			"Barrio" : "Guachipelín",
+			"Consumo" : 83
+		},
+		{
+			"Cantón" : "San José",
+			"Distrito" : "Escazú",
+			"Barrio" : "San Rafael",
+			"Consumo" : 83
 		}
 	]
 }

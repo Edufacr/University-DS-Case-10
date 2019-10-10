@@ -42,6 +42,7 @@ public class SensorDisplayController implements IConstants{
 	
 	public static void main(String[] args) {
 		SensorDisplayController s = new SensorDisplayController();
+		
 	}
 	
 }

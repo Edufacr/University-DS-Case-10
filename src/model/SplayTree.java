@@ -120,8 +120,67 @@ public class SplayTree<T> {
 		return pNode;
 	}
 	
+	public SplayTreeNode<T> splay(SplayTreeNode<T> pNode, String pValue){
+		if (pNode == null || pValue.compareTo(pNode.getKey()) == 0) { // Empty tree or pValue already in tree
+			return pNode;
+		}
+		
+		if (pValue.compareTo(pNode.getKey()) < 0) { // pValue < pNode.getContents()
+			
+			if (pNode.getLeftChild() == null) { return pNode; } // didn't find pValue
+			
+			if (pValue.compareTo(pNode.getLeftChild().getKey()) < 0) { // left & left -> Zig Zig
+				
+				pNode.getLeftChild().setLeftChild(splay(pNode.getLeftChild().getLeftChild(), pValue));
+				pNode = rightRotation(pNode);
+				
+			} else if (pValue.compareTo(pNode.getLeftChild().getKey()) > 0) { // left & right -> Zig Zag
+				
+				pNode.getLeftChild().setRightChild(splay(pNode.getLeftChild().getRightChild(), pValue));
+				if (pNode.getLeftChild().getRightChild() != null) {
+					pNode.setLeftChild(leftRotation(pNode.getLeftChild()));
+				}
+				
+			}
+			
+			if (pNode.getLeftChild() == null) {
+				return pNode;
+			} else { return rightRotation(pNode); }
+			
+			
+		} else if (pValue.compareTo(pNode.getKey()) > 0) { // pValue > pNode.getContents()
+			
+			if (pNode.getRightChild() == null) { return pNode; } // didn't find pValue
+			
+			if (pValue.compareTo(pNode.getRightChild().getKey()) > 0) { // right & right -> Zag Zag
+				
+				pNode.getRightChild().setRightChild(splay(pNode.getRightChild().getRightChild(), pValue));
+				pNode = leftRotation(pNode);
+				
+			} else if (pValue.compareTo(pNode.getRightChild().getKey()) < 0) { // right & left -> Zag Zig
+				
+				pNode.getRightChild().setLeftChild(splay(pNode.getRightChild().getLeftChild(), pValue));
+				if (pNode.getRightChild().getLeftChild() != null) {
+					pNode.setRightChild(rightRotation(pNode.getRightChild())); 
+				}
+				
+			}
+			
+			if (pNode.getRightChild() == null) {
+				return pNode;
+			} else { return leftRotation(pNode); }
+			
+		}
+		return pNode;
+	}
+	
 	public SplayTreeNode<T> search(T pValue){
 		this.root = splay(this.root, pValue);
+		return this.root;
+	}
+	
+	public SplayTreeNode<T> search(String pKey){
+		this.root = splay(this.root, pKey);
 		return this.root;
 	}
 	

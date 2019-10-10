@@ -1,11 +1,11 @@
-package view;
+package View;
 
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.event.*;
 import naryTree.NaryTreeNode;
 import model.Sensor;
-import view.NodeButton;
+import View.NodeButton;
 import controller.SensorDisplayController;
 import model.IConstants;
 
@@ -23,6 +23,7 @@ public class GUI implements IConstants{
 	
 	
 	public GUI() {
+		controller = new SensorDisplayController();
 		this.frame =new JFrame("Caso 10 - Eduardo y Gabriel");
 		this.searchBar = new JTextField("Search...");
 		searchBar.setBounds(50, SCREEN_HEIGHT - 100, 200, 20);
@@ -41,11 +42,6 @@ public class GUI implements IConstants{
 	    removeButton.setBounds(SCREEN_WIDTH - 160, SCREEN_HEIGHT - 100, 40, 40);
 	    removeButton.addActionListener(this.removeSensor());
 	    
-	    
-	    
-	    
-	    
-	    
 	    frame.add(this.searchButton);
 	    frame.add(this.searchBar);
 	    frame.add(this.addButton);
@@ -62,8 +58,34 @@ public class GUI implements IConstants{
 			public void actionPerformed(ActionEvent e){  
 				String searched = searchBar.getText();
 				
-				// verificar igualdad de búsqueda con splay
-				
+				for (NaryTreeNode<Sensor> node : controller.search(searched)) {
+					JFrame popFrame = new JFrame(node.getValue().getName());
+					JLabel labelDir = new JLabel("Cantón: " + node.getValue().getLocation()[0] + "  Distrito: " + node.getValue().getLocation()[1] + "  Barrio: " + node.getValue().getLocation()[2]);
+					JLabel labelConsumo = new JLabel("Consumo: " + node.getValue().getIntake());
+					JLabel labelFather = new JLabel("Padre: " + node.getFather());
+					JLabel labelSons = new JLabel("Hijos: " + node.getChildrenList());
+					
+					labelDir.setBounds(10, 10, 500, 40);
+					labelConsumo.setBounds(10, 60, 100, 40);
+					labelFather.setBounds(10, 110, 100, 40);
+					labelSons.setBounds(10, 150, 1000, 40);
+					
+					popFrame.add(labelDir);
+					popFrame.add(labelConsumo);
+					popFrame.add(labelFather);
+					popFrame.add(labelSons);
+					
+					popFrame.setSize(SCREEN_WIDTH/2,SCREEN_HEIGHT/2);
+					popFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					popFrame.setLayout(null);  
+					popFrame.setVisible(true); 
+					
+					
+//					System.out.println("Cantón: " + node.getValue().getLocation()[0] + "\nDistrito: " + node.getValue().getLocation()[1] + "\nBarrio: " + node.getValue().getLocation()[2]);
+//					System.out.println("Consumo: " + node.getValue().getIntake());
+//					System.out.println("Padre: " + node.getFather());
+//					System.out.println("Hijos: " + node.getChildrenList());
+				}
 		    }
 		};
 		return act;
@@ -72,9 +94,6 @@ public class GUI implements IConstants{
 	public ActionListener addSensor() {
 		ActionListener act = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-//				String canton = JOptionPane.showInputDialog(frame, "Cantón: ", null); 
-//				String distrito = JOptionPane.showInputDialog(frame, "Distrito: ", null); 
 				
 			    JTextField fCanton = new JTextField(15);
 			    JTextField fDistrito = new JTextField(15);
@@ -100,8 +119,10 @@ public class GUI implements IConstants{
 			    	String distrito = fDistrito.getText();
 			    	String barrio = fBarrio.getText();
 			    	String consumo = fConsumo.getText();
+			    	
+			    	controller.Add(selectedNode, Integer.valueOf(consumo), canton, distrito, barrio);
+			    	// Call function to repaint tree
 			    }
-
 			  }
 			
 		};
@@ -113,12 +134,9 @@ public class GUI implements IConstants{
 		
 		ActionListener act = new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				
+				controller.Remove(selectedNode);
 			}
 		};
-		
 		return act;
 	}
 	
@@ -127,8 +145,6 @@ public class GUI implements IConstants{
 	public void setSelectedNode(NaryTreeNode<Sensor> pSelected) {
 		this.selectedNode = pSelected; 
 	}
-	
-	
 	
 	public static void main(String[] args) {  
 		

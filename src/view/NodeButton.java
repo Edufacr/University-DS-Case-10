@@ -1,10 +1,10 @@
-package view;
+package View;
 
 import javax.swing.*;
 import java.awt.event.*;
 import naryTree.NaryTreeNode;
 import model.Sensor;
-import view.GUI;
+import View.GUI;
 
 
 public class NodeButton extends JButton{

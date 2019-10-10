@@ -7,10 +7,12 @@ import naryTree.*;
 public class SensorManager implements IConstants {
 	private NaryTree<Sensor> mainTree;
 	private SplayTree<NaryTreeNode<Sensor>> splayTree;
+	private IntakeOscilator intakeCalc;
 
 	public SensorManager() {
 		CreateSensorTree();
 		splayTree = new SplayTree<NaryTreeNode<Sensor>>();
+		intakeCalc = new IntakeOscilator();
 	}
 
 	private void CreateSensorTree() {
@@ -52,7 +54,7 @@ public class SensorManager implements IConstants {
 		for (NaryTreeNode<Sensor> child : pNode.getChildrenList()) {
 			ChangeValuesAux(child);
 		}
-		int intake = 1; // Aqui va una funcion que calcula el cambio del intake de una vez
+		int intake = intakeCalc.getIntake(pNode.getValue().getIntake());
 		pNode.getValue().notEnoughWater();
 		pNode.getValue().setIntake(intake);
 	}

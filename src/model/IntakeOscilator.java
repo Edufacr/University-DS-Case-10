@@ -11,9 +11,13 @@ public class IntakeOscilator implements IConstants{
 		this.random = new Random();
 	}
 	
-	public int oscilationPercentage() {
+	private int oscilationPercentage() {
 		int percent = random.nextInt(max_percentage + min_percentage) - min_percentage;
 		percent *= 0.01;
 		return percent;
+	}
+
+	public int getIntake(int pIntake){
+		return pIntake + (pIntake * oscilationPercentage());
 	}
 }
